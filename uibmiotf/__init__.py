@@ -6,10 +6,7 @@ import ure as re
 DOMAIN = 'internetofthings.ibmcloud.com'
 QUICKSTART_ORG = 'quickstart'
 DEVICE_COMMAND_TOPIC = 'iot-2/cmd/+/fmt/+'
-TOPIC_FORMAT_INDEX = 4
-TOPIC_COMMAND_INDEX = 2
-LOG_LEVELS = dict(debug=logging.DEBUG, info=logging.INFO, warn=logging.WARNING,
-                  error=logging.ERROR, crit=logging.CRITICAL)
+LOG_LEVELS = {v.lower(): k for k, v in logging._level_dict.items()}
 TOPIC_REGEX = re.compile('^iot-2/cmd/(.+?)/fmt/(.+)$')
 
 
