@@ -1,0 +1,7 @@
+{
+  "id": "my-device-id",
+  "device_type": "my-device-type",
+  "org": "my-org-id",
+  "token": "my-device-token",
+  "log_level": "debug"
+}
