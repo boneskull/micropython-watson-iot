@@ -3,7 +3,7 @@ from optimize_upip import OptimizeUpip
 
 setup(
     name='micropython-ibmiotf',
-    version='0.0.0',
+    version='0.0.1',
     packages=find_packages(),
     description='Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython',
     url='https://github.com/boneskull/micropython-ibmiotf',
