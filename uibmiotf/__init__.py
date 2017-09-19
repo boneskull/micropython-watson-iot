@@ -1,6 +1,7 @@
 from umqtt.robust import MQTTClient
 import logging
 import ujson as json
+import ure as re
 
 DOMAIN = 'internetofthings.ibmcloud.com'
 QUICKSTART_ORG = 'quickstart'
@@ -9,6 +10,7 @@ TOPIC_FORMAT_INDEX = 4
 TOPIC_COMMAND_INDEX = 2
 LOG_LEVELS = dict(debug=logging.DEBUG, info=logging.INFO, warn=logging.WARNING,
                   error=logging.ERROR, crit=logging.CRITICAL)
+TOPIC_REGEX = re.compile('^iot-2/cmd/(.+?)/fmt/(.+)$')
 
 
 def bytes_to_utf8(value):
@@ -239,20 +241,22 @@ class Device:
                 :type message: bytes
                 """
                 topic = bytes_to_utf8(topic)
-                self.logger.debug('topic: %s' % topic)
-                topic_parts = topic.split('/')
-                message_format = topic_parts[TOPIC_FORMAT_INDEX]
-                self.logger.debug('format: %s' % message_format)
+                matches = TOPIC_REGEX.match(topic)
+                command_id = matches.group(1)
+                message_format = matches.group(2)
                 if message_format in self.decoders:
-                    self.logger.debug('found decoder %s' % message_format)
                     message = self.decoders[message_format](message)
-                self.logger.debug('message: %s' % message)
-                command_id = topic_parts[TOPIC_COMMAND_INDEX]
+                else:
+                    self.logger.debug(
+                        'no suitable decoder for message format "%s"' %
+                        message_format)
+                self.logger.debug('topic: %s\nmessage: %s' % (topic, message))
                 if command_id in self.commands:
+                    self.logger.info('received command "%s"' % command_id)
                     self.commands[command_id](message)
                 else:
                     self.logger.warning('command "%s" received, \
-                    but no handler registered' % command_id)
+but no handler registered' % command_id)
 
             self.client.set_callback(message_callback)
             self.client.subscribe(DEVICE_COMMAND_TOPIC)
@@ -294,9 +298,17 @@ IoT Platform')
             disconnected socket')
 
     def loop(self):
+        """
+        Non-blocking check-for-messages.  You need to do something else
+        after this, such as `time.sleep(1)`, or other meaningful work,
+        if you are going to do this in a busy-loop.
+
+        This appears unsupported in some environments (incl. unix)
+        """
         self.client.check_msg()
 
     def sync_loop(self):
+        """
+        Blocking check-for-messages.  Run this in a busy-loop.
+        """
         self.client.wait_msg()
-
-
