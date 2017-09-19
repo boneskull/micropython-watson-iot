@@ -32,12 +32,12 @@ def bytes_to_json(value):
     return json.loads(bytes_to_utf8(value))
 
 
-def create(**kwargs):
+def Device(**kwargs):
     """
     Creates a Device object by merging parameters into contents of
     `uibmiotf.json`, if present.
     :return: New Device
-    :rtype: Device
+    :rtype: UnmanagedDevice
     """
     try:
         fh = open('uibmiotf.json')
@@ -46,18 +46,18 @@ def create(**kwargs):
         kwargs.update(**config)
     except OSError:
         pass
-    return Device(**kwargs)
+    return UnmanagedDevice(**kwargs)
 
 
-class Device:
+class UnmanagedDevice:
     """
-    A "device" for the Watson IoT platform
+    An "unmanaged device" for the Watson IoT platform
     """
     decoders = {}
     encoders = {}
     commands = {}
 
-    def __init__(self, org='quickstart', device_type=None, client_id=None,
+    def __init__(self, org='quickstart', device_type=None, device_id=None,
                  username='use-token-auth', token=None,
                  port=8883, clean_session=True, domain=DOMAIN, ssl_params=None,
                  log_level='info'):
@@ -74,8 +74,8 @@ class Device:
         :type org: str
         :param device_type: IoT platform device type
         :type device_type: str
-        :param client_id: IoT platform client identifier
-        :type client_id: str
+        :param device_id: IoT platform client identifier
+        :type device_id: str
         :param username: IoT platform username
         :type username: str
         :param token: IoT platform API token
@@ -91,7 +91,7 @@ class Device:
         """
         if not device_type:
             raise Exception('"device_type" parameter required')
-        if not client_id:
+        if not device_id:
             raise Exception('"client_id" parameter required')
         if not token:
             raise Exception('"token" parameter required')
@@ -101,7 +101,7 @@ class Device:
         self.token = token
         self.device_type = device_type
         self.address = '%s.messaging.%s' % (org, domain)
-        self.client_id = 'd:%s:%s:%s' % (self.org, self.device_type, client_id)
+        self.client_id = 'd:%s:%s:%s' % (self.org, self.device_type, device_id)
         self.port = port
         self.keep_alive = 60
         self.logger = logging.getLogger(
