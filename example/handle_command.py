@@ -13,10 +13,10 @@ specified list of commands."
 Commands can also be sent via RESTful API.
 """
 
-from uibmiotf import Device
+from watson_iot import Device
 
-# options can be loaded from uibmiotf.json; see
-# uibmiotf.example.json for example
+# options can be loaded from watson_iot.json; see
+# watson_iot.example.json for example
 my_device = Device(
     device_id='my-device-id',
     device_type='my-device-type',

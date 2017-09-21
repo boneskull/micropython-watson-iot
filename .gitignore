@@ -154,4 +154,4 @@ crashlytics-build.properties
 fabric.properties
 
 /uibmiotf_config.py
-uibmiotf.json
+watson_iot.json

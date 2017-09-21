@@ -35,12 +35,12 @@ def bytes_to_json(value):
 def Device(**kwargs):
     """
     Creates a Device object by merging parameters into contents of
-    `uibmiotf.json`, if present.
+    `watson_iot.json`, if present.
     :return: New Device
     :rtype: UnmanagedDevice
     """
     try:
-        fh = open('uibmiotf.json')
+        fh = open('watson_iot.json')
         # noinspection PyTypeChecker
         config = dict(json.loads(fh.read()))
         kwargs.update(**config)

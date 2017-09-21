@@ -91,11 +91,11 @@ Recompressed size: {new_size} bytes
 
 
 setup(
-    name='micropython-ibmiotf',
+    name='micropython-watson-iot',
     version='0.0.1',
     packages=find_packages(),
     description='Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython',
-    url='https://github.com/boneskull/micropython-ibmiotf',
+    url='https://github.com/boneskull/micropython-watson-iot',
     author='Christopher Hiller',
     author_email='boneskull@boneskull.com',
     maintainer='Christopher Hiller',

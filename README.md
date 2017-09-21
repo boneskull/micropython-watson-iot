@@ -1,4 +1,4 @@
-# micropython-ibmiotf
+# micropython-watson-iot
 
 > Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython
 
@@ -7,15 +7,23 @@
 Install with [micropython](https://github.com/micropython/micropython)'s `upip`:
 
 ```bash
-$ micropython -m upip install micropython-umqtt.simple micropython-umqtt.robust micropython-ibmiotf
+$ /path/to/micropython -m upip install micropython-logging micropython-umqtt.simple micropython-umqtt.robust micropython-watson-iot
 ```
 
+## Install (bare metal)
+
+You will need to manually copy `watson_iot.py`, as well as the prereqs `umqtt.robust` and `umqtt.simple`, and `logging.py` onto your device.
+
+> The two `umqtt` modules must live in a `umqtt/` directory.
+
 ## Usage
+
+In lieu of proper API documentation, here are a bunch of examples:
 
 ### Connecting
 
 ```python
-from uibmiotf import Device
+from watson_iot import Device
 
 my_device = Device(
     device_id='my-device-id', # required
@@ -92,7 +100,7 @@ my_device.unset_command('my-command')
 
 ### Registering a Custom Message Format
 
-`micropython-ibmiotf` comes with built-in encoders and decoders for JSON (`json`) and plain text (`text`) message formats.
+`micropython-watson-iot` comes with built-in encoders and decoders for JSON (`json`) and plain text (`text`) message formats.
 
 **All incoming messages (via commands, for example) are byte literals!** 
 
@@ -131,35 +139,35 @@ my_device.unset_decoder('csv')
 
 ## Limitations
 
-`micropython-ibmiotf` is designed to run on severely resource-constrained microcontrollers.
+`micropython-watson-iot` is designed to run on severely resource-constrained microcontrollers.
 
 If your use case falls outside of the limitations listed below, take a look at [the official Python SDK](https://github.com/ibm-watson-iot/iot-python) instead.
 
 ### No "Applications" Nor "Gateways"
 
-`micropython-ibmiotf` supports "unmanaged devices" only:
+`micropython-watson-iot` supports "unmanaged" devices only (at time of writing):
 
 > A device is anything that has a connection to the internet and has data to send to or receive from the cloud. You can use devices to send event information such as sensor readings to the cloud, and to accept commands from applications in the cloud.
 
-That means you cannot create an [application](https://console.bluemix.net/docs/services/IoT/applications/app_dev_index.html#app_dev_index) or [gateway](https://console.bluemix.net/docs/services/IoT/gateways/gw_dev_index.html#gw_dev_index)  with `micropython-ibmiotf`.
+That means you cannot create an [application](https://console.bluemix.net/docs/services/IoT/applications/app_dev_index.html#app_dev_index) or [gateway](https://console.bluemix.net/docs/services/IoT/gateways/gw_dev_index.html#gw_dev_index)  with `micropython-watson-iot`.
 
 ### No "Managed Devices"
 
-`micropython-ibmiotf` (as of this writing) does not support [managed devices](https://console.bluemix.net/docs/services/IoT/devices/device_mgmt/index.html#index).
+`micropython-watson-iot` (as of this writing) does not support [managed devices](https://console.bluemix.net/docs/services/IoT/devices/device_mgmt/index.html#index).
 
 This may or may not be feasible.
 
 ### No XML Support
 
-`micropython-ibmiotf` does not (and likely *will not*) parse commands received as XML; nor does it provide any "helpers" to publish events as XML.  
+`micropython-watson-iot` does not (and likely *will not*) parse commands received as XML; nor does it provide any "helpers" to publish events as XML.  
 
 ### No Support for QoS 2
 
-As of Sep 20, 2017, the official Micropython MQTT client does not support QoS 2, so neither does `micropython-ibmiotf`.
+As of Sep 20, 2017, the official Micropython MQTT client does not support QoS 2, so neither does `micropython-watson-iot`.
 
 ### Micropython Itself
 
-Micropython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrst/index.html).  While Micropython is *based on* Python 3, `micropython-ibmiotf` is not targeting Python 3, nor is it targeting any forks of Micropython.
+Micropython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrst/index.html).  While Micropython is *based on* Python 3, `micropython-watson-iot` is not targeting Python 3, nor is it targeting any forks of Micropython.
 
 # License
 
