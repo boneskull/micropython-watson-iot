@@ -18,8 +18,8 @@ which devices and events they subscribe to."
 from watson_iot import Device
 import utime as time
 
-# options can be loaded from watson_iot.json; see
-# watson_iot.example.json for example
+# options can be loaded from watson_iot.json by omitting parameters.
+# see watson_iot.example.json for example
 device = Device(
     device_id='my-device-id',
     device_type='my-device-type',
