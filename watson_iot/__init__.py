@@ -114,6 +114,7 @@ class UnmanagedDevice:
         self.client = MQTTClient(self.client_id, self.address,
                                  user=self.username,
                                  password=self.token,
+                                 keepalive=60,
                                  ssl=self.is_secure, ssl_params=self.ssl_params)
         if self.logger.level == logging.DEBUG:
             self.client.DEBUG = True
