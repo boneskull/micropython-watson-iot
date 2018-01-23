@@ -7,7 +7,8 @@
 Install with [micropython](https://github.com/micropython/micropython)'s `upip`:
 
 ```bash
-$ /path/to/micropython -m upip install micropython-logging micropython-umqtt.simple micropython-umqtt.robust micropython-watson-iot
+$ /path/to/micropython -m upip install micropython-logging micropython-umqtt.simple \
+  micropython-umqtt.robust micropython-watson-iot
 ```
 
 ## Install (bare metal)
