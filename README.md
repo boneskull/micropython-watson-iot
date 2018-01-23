@@ -172,4 +172,4 @@ Micropython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrs
 
 # License
 
-© 2018 [Christopher Hiller](https://boneskull.com).  Licensed Apache-2.0
+© 2017-2018 [Christopher Hiller](https://boneskull.com).  Licensed Apache-2.0
