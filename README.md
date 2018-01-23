@@ -1,21 +1,64 @@
 # micropython-watson-iot
 
-> Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython
+> Unofficial IBM Watson IoT Platform SDK for Devices Running MicroPython
 
-## Install (*nix)
+This is a "SDK" in the loosest sense.
+
+## Installation
+
+**This library is intended to be used with an [ESP32](https://espressif.com/en/products/hardware/esp32/overview)-based device**, or at least something with connectivity that has more RAM than a ESP8266, and runs [MicroPython](https://micropython.org).
+
+You *may* be able to run it on an actual computer, but I have no idea why you would.
+
+### Installation On a Device running MicroPython
+
+The device should already have been flashed with [MicroPython](https://micropython.org).
+
+1. Clone [this repo](https://github.com/boneskull/micropython-watson-iot), or download a `.zip`.
+1. From your working copy, copy the `watson_iot/` directory to your device
+1. Create a `umqtt` directory on your device
+1. Clone [micropython-lib](https://github.com/micropython/micropython-lib) or download a `.zip`
+1. From the `micropython-lib` working copy, put: 
+    1. `umqtt.simple/umqtt/simple.py` into `umqtt/simple.py`
+    1. `umqtt.robust/umqtt/robust.py` into `umqtt/robust.py`
+
+#### Using Adafruit's MicroPython Tool
+
+A tool you can use to copy files is [adafruit-ampy](https://github.com/adafruit/ampy), which can be installed via `pip3 install adafruit-ampy`.  
+
+This oughtta do it: 
+
+```bash
+$ PORT=/dev/tty.SLAB_USBtoUART && \
+ampy --port "${PORT}" put /path/to/micropython-watson-iot/watson_iot && \
+ampy --port "${PORT}" mkdir umqtt && \
+ampy --port "${PORT}" put \
+  /path/to/micropython-lib/umqtt.simple/umqtt/simple.py umqtt/simple.py && \
+ampy --port "${PORT}" put \
+  /path/to/micropython-lib/umqtt.robust/umqtt/robust.py umqtt/robust.py
+```
+
+(Replace `/dev/tty.SLAB_USBtoUART` with your device path.)
+
+### Installation on Linux/Mac
 
 Install with [micropython](https://github.com/micropython/micropython)'s `upip`:
 
 ```bash
-$ /path/to/micropython -m upip install micropython-logging micropython-umqtt.simple \
-micropython-umqtt.robust micropython-watson-iot
+$ /path/to/micropython -m upip install micropython-logging \
+micropython-umqtt.simple micropython-umqtt.robust micropython-watson-iot
 ```
 
-## Install (bare metal)
+### Installation on Windows
 
-You will need to manually copy `watson_iot.py`, as well as the prereqs `umqtt.robust` and `umqtt.simple`, and `logging.py` onto your device.
+I'm not sure.  Please send a PR to update this file if you figure it out!
 
-> The two `umqtt` modules must live in a `umqtt/` directory.
+## IBM Cloud & Watson IoT Platform
+
+You have a couple options here.
+
+- To experiment, you can use [Watson IoT Platform Quickstart](https://quickstart.internetofthings.ibmcloud.com/), or
+- [Sign up for a (free) IBM Cloud account](https://console.bluemix.net/registration/), then [create an Watson IoT Platform service](https://console.bluemix.net/catalog/services/internet-of-things-platform) from the catalog
 
 ## Usage
 
@@ -140,17 +183,17 @@ my_device.unset_decoder('csv')
 
 ## Limitations
 
-`micropython-watson-iot` is designed to run on severely resource-constrained microcontrollers.
+If your use case falls outside of the limitations listed below, take a look at [the official Python SDK](https://github.com/ibm-watson-iot/iot-python) instead.  
 
-If your use case falls outside of the limitations listed below, take a look at [the official Python SDK](https://github.com/ibm-watson-iot/iot-python) instead.
+*That being said*, I'm open to collaboration on the following items, whether they make sense within this project, or others.
 
 ### No "Applications" Nor "Gateways"
 
-`micropython-watson-iot` supports "unmanaged" devices only (at time of writing):
+`micropython-watson-iot` supports "unmanaged" devices only.  A "device" in the context of Watson IoT Platform is: 
 
 > A device is anything that has a connection to the internet and has data to send to or receive from the cloud. You can use devices to send event information such as sensor readings to the cloud, and to accept commands from applications in the cloud.
 
-That means you cannot create an [application](https://console.bluemix.net/docs/services/IoT/applications/app_dev_index.html#app_dev_index) or [gateway](https://console.bluemix.net/docs/services/IoT/gateways/gw_dev_index.html#gw_dev_index)  with `micropython-watson-iot`.
+That means you cannot create an [application](https://console.bluemix.net/docs/services/IoT/applications/app_dev_index.html#app_dev_index) or [gateway](https://console.bluemix.net/docs/services/IoT/gateways/gw_dev_index.html#gw_dev_index) with `micropython-watson-iot`.
 
 ### No "Managed Devices"
 
@@ -164,11 +207,13 @@ This may or may not be feasible.
 
 ### No Support for QoS 2
 
-As of Sep 20, 2017, the official Micropython MQTT client does not support QoS 2, so neither does `micropython-watson-iot`.
+As of Sep 20, 2017, the official MicroPython MQTT client module does not support QoS 2, so neither does `micropython-watson-iot`.
 
-### Micropython Itself
+I'd be cool with using a *non-official* MQTT client module which *did* support QoS 2, if such a thing existed!
 
-Micropython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrst/index.html).  While Micropython is *based on* Python 3, `micropython-watson-iot` is not targeting Python 3, nor is it targeting any forks of Micropython.
+### MicroPython Itself
+
+MicroPython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrst/index.html).  While MicroPython is *based on* Python 3, `micropython-watson-iot` is not targeting Python 3, nor is it targeting any forks of MicroPython (e.g., [CircuitPython](https://github.com/adafruit/circuitpython)).
 
 # License
 
