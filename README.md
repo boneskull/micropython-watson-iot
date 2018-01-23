@@ -38,7 +38,7 @@ ampy --port "${PORT}" put \
   /path/to/micropython-lib/umqtt.robust/umqtt/robust.py umqtt/robust.py
 ```
 
-(Replace `/dev/tty.SLAB_USBtoUART` with your device path.)
+(Replace the working copy paths and the value of `PORT` with your device path.)
 
 ### Installation on Linux/Mac
 
