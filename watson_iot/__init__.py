@@ -1,7 +1,8 @@
-from umqtt.robust import MQTTClient
+import json
+import re
+
 import logging
-import ujson as json
-import ure as re
+from umqtt.robust import MQTTClient
 
 DOMAIN = 'internetofthings.ibmcloud.com'
 QUICKSTART_ORG = 'quickstart'
