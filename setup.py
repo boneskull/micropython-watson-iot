@@ -94,7 +94,7 @@ Recompressed size: {new_size} bytes
 
 setup(
     name='micropython-watson-iot',
-    version='0.1.1',
+    version='0.1.2',
     packages=find_packages(),
     description=
     'Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython',
@@ -104,6 +104,8 @@ setup(
     maintainer='Christopher Hiller',
     maintainer_email='boneskull@boneskull.com',
     license='Apache-2.0',
-    install_requires=('micropython-umqtt.robust', 'micropython-logging'),
+    install_requires=('micropython-umqtt.robust',
+                      'micropython-umqtt.simple',
+                      'micropython-logging'),
     cmdclass=dict(sdist=UpipSdist)
 )
