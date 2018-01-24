@@ -29,13 +29,16 @@ The above will install the latest release of this module (and its dependencies) 
 
 ### Installation via Host Computer
 
+If for some reason the above doesn't work, you can try to do this manually through various means.
+
 1. Clone [this repo](https://github.com/boneskull/micropython-watson-iot), or download a `.zip`.
 1. From your working copy, copy the `watson_iot/` directory to your device
-1. Create a `umqtt` directory on your device
+1. Create a `lib` directory on your device
+1. Create a `lib/umqtt` directory on your device 
 1. Clone [micropython-lib](https://github.com/micropython/micropython-lib) or download a `.zip`
 1. From the `micropython-lib` working copy, put: 
-    1. `umqtt.simple/umqtt/simple.py` into `umqtt/simple.py`
-    1. `umqtt.robust/umqtt/robust.py` into `umqtt/robust.py`
+    1. `umqtt.simple/umqtt/simple.py` into `lib/umqtt/simple.py`
+    1. `umqtt.robust/umqtt/robust.py` into `lib/umqtt/robust.py`
 
 #### Using Adafruit's MicroPython Tool
 
@@ -46,11 +49,12 @@ This oughtta do it:
 ```bash
 $ PORT=/dev/tty.SLAB_USBtoUART && \
 ampy --port "${PORT}" put /path/to/micropython-watson-iot/watson_iot && \
-ampy --port "${PORT}" mkdir umqtt && \
+ampy --port "${PORT}" mkdir lib && \
+ampy --port "${PORT}" mkdir lib/umqtt && \
 ampy --port "${PORT}" put \
-  /path/to/micropython-lib/umqtt.simple/umqtt/simple.py umqtt/simple.py && \
+  /path/to/micropython-lib/umqtt.simple/umqtt/simple.py lib/umqtt/simple.py && \
 ampy --port "${PORT}" put \
-  /path/to/micropython-lib/umqtt.robust/umqtt/robust.py umqtt/robust.py
+  /path/to/micropython-lib/umqtt.robust/umqtt/robust.py lib/umqtt/robust.py
 ```
 
 (Replace the working copy paths and the value of `PORT` with your device path.)
