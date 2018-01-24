@@ -92,9 +92,10 @@ Recompressed size: {new_size} bytes
 
 setup(
     name='micropython-watson-iot',
-    version='0.0.1',
+    version='0.1.0',
     packages=find_packages(),
-    description='Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython',
+    description=
+    'Unofficial IBM Watson IoT Platform SDK for Devices Running Micropython',
     url='https://github.com/boneskull/micropython-watson-iot',
     author='Christopher Hiller',
     author_email='boneskull@boneskull.com',
@@ -102,7 +103,7 @@ setup(
     maintainer_email='boneskull@boneskull.com',
     license='Apache-2.0',
     install_requires=(
-        'micropython-umqtt.simple>=1.3.4', 'micropython-umqtt.robust>=1.0',
-        'micropython-logging>=0.1.3'),
+        'micropython-umqtt.simple', 'micropython-umqtt.robust',
+        'micropython-logging'),
     cmdclass=dict(sdist=UpipSdist)
 )
