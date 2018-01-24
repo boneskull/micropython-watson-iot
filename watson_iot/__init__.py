@@ -52,14 +52,17 @@ def Device(**kwargs):
 
 class UnmanagedDevice:
     """
-    An "unmanaged device" for the Watson IoT platform
+    An "unmanaged device" for the Watson IoT platform.
+
+    Can be used with "Quickstart";
+    see https://quickstart.internetofthings.ibmcloud.com
     """
     decoders = {}
     encoders = {}
     commands = {}
 
-    def __init__(self, org='quickstart', device_type=None, device_id=None,
-                 username='use-token-auth', token=None,
+    def __init__(self, org=QUICKSTART_ORG, device_type=None, device_id=None,
+                 username='use-token-auth', token='',
                  port=8883, clean_session=True, domain=DOMAIN, ssl_params=None,
                  log_level='info'):
         """
@@ -68,6 +71,8 @@ class UnmanagedDevice:
         Creates MQTT client object, but does not connect.
 
         `quickstart` implies an *insecure* connection!
+
+        `device_type` and `token` not necessary if `org` is `quickstart`.
 
         :param log_level: Logging level
         :type log_level: str
@@ -90,14 +95,16 @@ class UnmanagedDevice:
         :param ssl_params: Additional SSL parameters for a secure connection
         :type ssl_params: dict
         """
-        if not device_type:
-            raise Exception('"device_type" parameter required')
         if not device_id:
-            raise Exception('"client_id" parameter required')
-        if not token:
-            raise Exception('"token" parameter required')
-
+            raise Exception('"device_id" parameter required')
         self.org = org
+
+        if not self.is_quickstart:
+            if not device_type:
+                raise Exception('"device_type" parameter required')
+            if not token:
+                raise Exception('"token" parameter required')
+
         self.username = username
         self.token = token
         self.device_type = device_type
