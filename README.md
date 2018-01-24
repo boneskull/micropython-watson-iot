@@ -8,11 +8,26 @@ This is a "SDK" in the loosest sense.
 
 **This library is intended to be used with an [ESP32](https://espressif.com/en/products/hardware/esp32/overview)-based device**, or at least something with connectivity that has more RAM than a ESP8266, and runs [MicroPython](https://micropython.org).
 
-You *may* be able to run it on an actual computer, but I have no idea why you would.
+The device you're using should already have been flashed with [MicroPython](https://micropython.org).
 
-### Installation On a Device running MicroPython
+### Installation via REPL
 
-The device should already have been flashed with [MicroPython](https://micropython.org).
+Open a serial terminal, e.g.:
+
+```bash
+$ python3 -m serial.tools.miniterm --raw /dev/your-com-port 115200
+```
+
+Ensure your device has internet connectivity, then:
+
+```python
+import upip
+upip.install('micropython-watson-iot')
+```
+
+The above will install the latest release of this module (and its dependencies) within `lib/`. 
+
+### Installation via Host Computer
 
 1. Clone [this repo](https://github.com/boneskull/micropython-watson-iot), or download a `.zip`.
 1. From your working copy, copy the `watson_iot/` directory to your device
@@ -39,19 +54,6 @@ ampy --port "${PORT}" put \
 ```
 
 (Replace the working copy paths and the value of `PORT` with your device path.)
-
-### Installation on Linux/Mac
-
-Install with [micropython](https://github.com/micropython/micropython)'s `upip`:
-
-```bash
-$ /path/to/micropython -m upip install micropython-logging \
-micropython-umqtt.simple micropython-umqtt.robust micropython-watson-iot
-```
-
-### Installation on Windows
-
-I'm not sure.  Please send a PR to update this file if you figure it out!
 
 ## IBM Cloud & Watson IoT Platform
 
@@ -214,6 +216,16 @@ I'd be cool with using a *non-official* MQTT client module which *did* support Q
 ### MicroPython Itself
 
 MicroPython [is not CPython](http://docs.micropython.org/en/latest/pyboard/genrst/index.html).  While MicroPython is *based on* Python 3, `micropython-watson-iot` is not targeting Python 3, nor is it targeting any forks of MicroPython (e.g., [CircuitPython](https://github.com/adafruit/circuitpython)).
+
+## Development Notes
+
+### Publish
+
+```bash
+$ ./setup.py sdist upload
+```
+
+Enter your PyPi pizassword at the pizrompt.
 
 # License
 
